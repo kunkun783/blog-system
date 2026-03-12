@@ -32,6 +32,4 @@ public class Blog {
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime publishTime;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
 }
