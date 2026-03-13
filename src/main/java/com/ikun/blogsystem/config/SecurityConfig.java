@@ -48,7 +48,7 @@ public class SecurityConfig {
                         // 注意：这里移除了 /api 前缀，直接从路径开始写
                         .requestMatchers("/user/login", "/user/register").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/blog/list", "/blog/detail/**").permitAll()
+                        .requestMatchers("/blog/list", "/blog/detail/**", "/blog/user/**").permitAll()
                         .requestMatchers("/category/list").permitAll()
                         .requestMatchers("/admin/**").hasRole("2")
                         .requestMatchers("/doc.html", "/webjars/**", "/v3/api-docs/**").permitAll()

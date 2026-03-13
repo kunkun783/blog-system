@@ -1,5 +1,6 @@
 package com.ikun.blogsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -18,7 +19,10 @@ public class Blog {
 
     private String content;
 
-    private String imageUrl;
+    /**
+     * 博文图片，多张以逗号分隔，前端展示最多3张
+     */
+    private String imageUrls;
 
     private Integer likesCount;
 
@@ -30,6 +34,7 @@ public class Blog {
     private Integer auditStatus;
 
     @TableField(fill = FieldFill.INSERT)
+    @JsonIgnore
     private LocalDateTime publishTime;
 
 }
