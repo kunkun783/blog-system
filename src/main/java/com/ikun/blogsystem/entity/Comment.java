@@ -24,7 +24,6 @@ public class Comment {
 
     private Integer likesCount;
 
-    private Integer auditStatus;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime publishTime;

@@ -159,7 +159,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UserFollow userFollow = new UserFollow();
         userFollow.setFollowerId(userId);
         userFollow.setFollowingId(followUserId);
-        userFollow.setCreateTime(LocalDateTime.now());
         userFollowMapper.insert(userFollow);
 
         return Result.success();

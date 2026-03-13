@@ -12,6 +12,4 @@ public class UserCollection {
     private Long id;
     private Long userId;
     private Long blogId;
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
 }

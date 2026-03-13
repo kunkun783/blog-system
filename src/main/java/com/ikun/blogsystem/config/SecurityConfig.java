@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/login", "/user/register").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/blog/list", "/blog/detail/**", "/blog/user/**").permitAll()
+                        .requestMatchers("/comment/list/**").permitAll()
                         .requestMatchers("/category/list").permitAll()
                         .requestMatchers("/admin/**").hasRole("2")
                         .requestMatchers("/doc.html", "/webjars/**", "/v3/api-docs/**").permitAll()

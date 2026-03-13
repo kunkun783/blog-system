@@ -2,13 +2,17 @@ package com.ikun.blogsystem.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Data
-@TableName("user_follow")
-public class UserFollow {
+@TableName("comment_like")
+public class CommentLike {
     @TableId(type = IdType.AUTO)
     private Long id;
-    private Long followerId;
-    private Long followingId;
+
+    private Long userId;
+
+    private Long commentId;
+
 }

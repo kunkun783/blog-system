@@ -14,6 +14,4 @@ public class UserLike {
 
     private Long blogId;
 
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
 }
