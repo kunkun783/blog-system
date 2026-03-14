@@ -67,4 +67,6 @@ public interface BlogService extends IService<Blog> {
      * 分页搜索博文（关键字、类别）
      */
     Result<Page<BlogVO>> listBlogs(String keyword, Integer categoryId, Integer current, Integer size);
+
+    Result<Page<BlogVO>> getCollectedBlogs(Integer current, Integer size);
 }

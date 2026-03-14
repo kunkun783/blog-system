@@ -22,6 +22,9 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -277,6 +280,44 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
         Page<Blog> blogPage = this.page(page, wrapper);
         Page<BlogVO> voPage = new Page<>(current, size, blogPage.getTotal());
         voPage.setRecords(blogPage.getRecords().stream().map(this::convertToVO).collect(Collectors.toList()));
+        return Result.success(voPage);
+    }
+
+    @Override
+    public Result<Page<BlogVO>> getCollectedBlogs(Integer current, Integer size) {
+        Long userId = getCurrentUserId();
+        if (userId == null) {
+            return Result.error(401, "请先登录");
+        }
+
+        Page<UserCollection> page = new Page<>(current, size);
+        Page<UserCollection> collectPage = userCollectionMapper.selectPage(page, new LambdaQueryWrapper<UserCollection>()
+                .eq(UserCollection::getUserId, userId)
+                .orderByDesc(UserCollection::getId));
+
+        List<Long> blogIds = collectPage.getRecords().stream()
+                .map(UserCollection::getBlogId)
+                .collect(Collectors.toList());
+
+        Page<BlogVO> voPage = new Page<>(current, size, collectPage.getTotal());
+        if (blogIds.isEmpty()) {
+            voPage.setRecords(List.of());
+            return Result.success(voPage);
+        }
+
+        List<Blog> blogs = this.list(new LambdaQueryWrapper<Blog>()
+                .in(Blog::getId, blogIds)
+                .eq(Blog::getAuditStatus, 1));
+        Map<Long, Blog> blogMap = blogs.stream()
+                .collect(Collectors.toMap(Blog::getId, Function.identity()));
+
+        List<BlogVO> voRecords = blogIds.stream()
+                .map(blogMap::get)
+                .filter(Objects::nonNull)
+                .map(this::convertToVO)
+                .collect(Collectors.toList());
+
+        voPage.setRecords(voRecords);
         return Result.success(voPage);
     }
 }

@@ -19,6 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -177,5 +180,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .eq(UserFollow::getFollowingId, followUserId));
 
         return Result.success();
+    }
+
+    @Override
+    public Result<List<User>> getFollowList() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
+        Long userId = currentUser.getId();
+
+        List<Long> followUserIds = userFollowMapper.selectList(new LambdaQueryWrapper<UserFollow>()
+                        .eq(UserFollow::getFollowerId, userId))
+                .stream()
+                .map(UserFollow::getFollowingId)
+                .collect(Collectors.toList());
+
+        if (followUserIds.isEmpty()) {
+            return Result.success(Collections.emptyList());
+        }
+
+        List<User> users = this.listByIds(followUserIds);
+        users.forEach(user -> user.setPassword(null));
+        return Result.success(users);
     }
 }

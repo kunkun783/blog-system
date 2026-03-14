@@ -7,6 +7,8 @@ import com.ikun.blogsystem.entity.User;
 import com.ikun.blogsystem.entity.dto.UserLoginDTO;
 import com.ikun.blogsystem.entity.dto.UserRegisterDTO;
 
+import java.util.List;
+
 public interface UserService extends IService<User> {
     /**
      * 用户注册，直接返回 Result
@@ -53,4 +55,6 @@ public interface UserService extends IService<User> {
      * @return Result<Void>
      */
     Result<Void> unfollowUser(Long followUserId);
+
+    Result<List<User>> getFollowList();
 }

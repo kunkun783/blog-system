@@ -94,4 +94,11 @@ public class BlogController {
             @RequestParam(defaultValue = "10") Integer size) {
         return blogService.getBlogsByUserId(userId, current, size);
     }
+
+    @GetMapping("/collect/list")
+    public Result<Page<BlogVO>> collectList(
+            @RequestParam(defaultValue = "1") Integer current,
+            @RequestParam(defaultValue = "10") Integer size) {
+        return blogService.getCollectedBlogs(current, size);
+    }
 }

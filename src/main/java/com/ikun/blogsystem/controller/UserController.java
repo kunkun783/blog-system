@@ -1,6 +1,7 @@
 package com.ikun.blogsystem.controller;
 
 import com.ikun.blogsystem.common.result.Result;
+import com.ikun.blogsystem.entity.User;
 import com.ikun.blogsystem.entity.dto.UserLoginDTO;
 import com.ikun.blogsystem.entity.dto.UserRegisterDTO;
 import com.ikun.blogsystem.service.FileService;
@@ -8,6 +9,7 @@ import com.ikun.blogsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -86,5 +89,10 @@ public class UserController {
     @DeleteMapping("/follow/{userId}")
     public Result<Void> unfollowUser(@PathVariable Long userId) {
         return userService.unfollowUser(userId);
+    }
+
+    @GetMapping("/follow/list")
+    public Result<List<User>> getFollowList() {
+        return userService.getFollowList();
     }
 }

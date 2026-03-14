@@ -20,7 +20,7 @@ public class CategoryController {
     /**
      * 获取所有博文类别
      */
-    @GetMapping("/list")
+    @GetMapping({"/list", "/type/list", "/types"})
     public Result<List<Category>> list() {
         return categoryService.getAllCategories();
     }
