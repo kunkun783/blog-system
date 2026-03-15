@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -201,5 +203,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         List<User> users = this.listByIds(followUserIds);
         users.forEach(user -> user.setPassword(null));
         return Result.success(users);
+    }
+
+    @Override
+    public Result<Map<String, String>> getUserInfo() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
+        if (currentUser == null) {
+            return Result.error(ResultCode.USER_NOT_FOUND);
+        }
+
+        Map<String, String> data = new HashMap<>();
+        data.put("nickname", currentUser.getNickname());
+        data.put("avatarUrl", currentUser.getAvatarUrl());
+        return Result.success(data);
     }
 }

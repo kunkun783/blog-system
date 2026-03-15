@@ -32,4 +32,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         this.save(category);
         return Result.success();
     }
+
+    @Override
+    public Result<Void> deleteCategory(Integer id) {
+        Category category = this.getById(id);
+        if (category == null) {
+            return Result.error(404, "该分类不存在");
+        }
+        this.removeById(id);
+        return Result.success();
+    }
 }

@@ -95,4 +95,9 @@ public class UserController {
     public Result<List<User>> getFollowList() {
         return userService.getFollowList();
     }
+
+    @GetMapping("/info")
+    public Result<Map<String, String>> getUserInfo() {
+        return userService.getUserInfo();
+    }
 }

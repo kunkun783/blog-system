@@ -11,4 +11,6 @@ public interface FileService {
      * @return 文件的访问 URL
      */
     String uploadAvatar(MultipartFile file);
+
+    String uploadBlogImage(MultipartFile file);
 }

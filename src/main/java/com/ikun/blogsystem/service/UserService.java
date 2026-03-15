@@ -8,6 +8,7 @@ import com.ikun.blogsystem.entity.dto.UserLoginDTO;
 import com.ikun.blogsystem.entity.dto.UserRegisterDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService extends IService<User> {
     /**
@@ -57,4 +58,6 @@ public interface UserService extends IService<User> {
     Result<Void> unfollowUser(Long followUserId);
 
     Result<List<User>> getFollowList();
+
+    Result<Map<String, String>> getUserInfo();
 }

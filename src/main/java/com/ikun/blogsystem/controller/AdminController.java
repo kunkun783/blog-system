@@ -31,6 +31,11 @@ public class AdminController {
         return categoryService.addCategory(name);
     }
 
+    @DeleteMapping("/category/{id}")
+    public Result<Void> deleteCategory(@PathVariable Integer id) {
+        return categoryService.deleteCategory(id);
+    }
+
     /**
      * 获取待审核博文列表
      */

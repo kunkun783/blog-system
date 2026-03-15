@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .requestMatchers("/blog/list", "/blog/detail/**", "/blog/user/**").permitAll()
                         .requestMatchers("/comment/list/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/category/**").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("2")
                         .requestMatchers("/doc.html", "/webjars/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
@@ -66,7 +67,7 @@ public class SecurityConfig {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/uploads/**")
-                    .addResourceLocations("file:C:/Users/li195/Desktop/img");
+                    .addResourceLocations("file:C:/Users/li195/Desktop/img/");
         }
     }
 }

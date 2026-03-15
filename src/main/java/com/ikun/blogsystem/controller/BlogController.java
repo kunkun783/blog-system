@@ -5,9 +5,14 @@ import com.ikun.blogsystem.common.result.Result;
 import com.ikun.blogsystem.entity.dto.BlogPublishDTO;
 import com.ikun.blogsystem.entity.vo.BlogVO;
 import com.ikun.blogsystem.service.BlogService;
+import com.ikun.blogsystem.service.FileService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/blog")
@@ -15,6 +20,9 @@ public class BlogController {
 
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    private FileService fileService;
 
     /**
      * 发布博文
@@ -93,6 +101,14 @@ public class BlogController {
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "10") Integer size) {
         return blogService.getBlogsByUserId(userId, current, size);
+    }
+
+    @PostMapping("/image")
+    public Result<Map<String, String>> uploadBlogImage(@RequestParam("file") MultipartFile file) {
+        String url = fileService.uploadBlogImage(file);
+        Map<String, String> data = new HashMap<>();
+        data.put("url", url);
+        return Result.success(data);
     }
 
     @GetMapping("/collect/list")

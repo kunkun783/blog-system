@@ -16,4 +16,6 @@ public interface CategoryService extends IService<Category> {
      * 添加分类 (管理员)
      */
     Result<Void> addCategory(String name);
+
+    Result<Void> deleteCategory(Integer id);
 }
